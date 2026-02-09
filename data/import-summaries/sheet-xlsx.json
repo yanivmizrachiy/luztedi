@@ -1,0 +1,144 @@
+{
+  "source": "sheet-xlsx",
+  "xlsx": "C:\\Users\\yaniv\\OneDrive\\Desktop\\luztedi\\tmp_sheet.xlsx",
+  "today": "2026-02-09",
+  "added": {
+    "schedule": 0,
+    "exams": 0,
+    "holidays": 0
+  },
+  "merged": {
+    "schedule": 32,
+    "exams": 0,
+    "holidays": 22
+  },
+  "uncertainCount": 18,
+  "uncertain": [
+    {
+      "source": "xlsx",
+      "reason": "schedule-uncertain-type",
+      "text": "סמ\"ל ט4",
+      "date": "2026-02-11",
+      "sheet": "פברואר"
+    },
+    {
+      "source": "xlsx",
+      "reason": "schedule-uncertain-type",
+      "text": "הוקרה למחנכים",
+      "date": "2026-02-17",
+      "sheet": "פברואר"
+    },
+    {
+      "source": "xlsx",
+      "reason": "schedule-uncertain-type",
+      "text": "סמ\"ל ט4",
+      "date": "2026-02-18",
+      "sheet": "פברואר"
+    },
+    {
+      "source": "xlsx",
+      "reason": "schedule-uncertain-type",
+      "text": "סמ\"ל ט4",
+      "date": "2026-02-25",
+      "sheet": "פברואר"
+    },
+    {
+      "source": "xlsx",
+      "reason": "schedule-uncertain-type",
+      "text": "תענית אסתר",
+      "date": "2026-03-02",
+      "sheet": "מרץ"
+    },
+    {
+      "source": "xlsx",
+      "reason": "schedule-uncertain-type",
+      "text": "ז1+ט1 הומניסטיקה יציאה לספריה הלאומית",
+      "date": "2026-03-08",
+      "sheet": "מרץ"
+    },
+    {
+      "source": "xlsx",
+      "reason": "schedule-uncertain-type",
+      "text": "סמ\"ל ט4",
+      "date": "2026-03-11",
+      "sheet": "מרץ"
+    },
+    {
+      "source": "xlsx",
+      "reason": "schedule-uncertain-type",
+      "text": "התרמה לאל\"ין",
+      "date": "2026-03-17",
+      "sheet": "מרץ"
+    },
+    {
+      "source": "xlsx",
+      "reason": "schedule-uncertain-type",
+      "text": "סמ\"ל ט4",
+      "date": "2026-03-18",
+      "sheet": "מרץ"
+    },
+    {
+      "source": "xlsx",
+      "reason": "schedule-uncertain-type",
+      "text": "פעילות הערכות לרעידת אדמה בשכבת ח'",
+      "date": "2026-03-23",
+      "sheet": "מרץ"
+    },
+    {
+      "source": "xlsx",
+      "reason": "schedule-uncertain-type",
+      "text": "יום הזכרון לשואה ולגבורה",
+      "date": "2026-04-14",
+      "sheet": "אפריל"
+    },
+    {
+      "source": "xlsx",
+      "reason": "schedule-uncertain-type",
+      "text": "יום הזכרון",
+      "date": "2026-04-21",
+      "sheet": "אפריל"
+    },
+    {
+      "source": "xlsx",
+      "reason": "schedule-uncertain-type",
+      "text": "יום העצמאות",
+      "date": "2026-04-22",
+      "sheet": "אפריל"
+    },
+    {
+      "source": "xlsx",
+      "reason": "schedule-uncertain-type",
+      "text": "ל\"ג בעומר",
+      "date": "2026-05-05",
+      "sheet": "מאי"
+    },
+    {
+      "source": "xlsx",
+      "reason": "schedule-uncertain-type",
+      "text": "יום ישראל/יום ירושלים",
+      "date": "2026-05-14",
+      "sheet": "מאי"
+    },
+    {
+      "source": "xlsx",
+      "reason": "schedule-uncertain-type",
+      "text": "סיכום פדגוגי",
+      "date": "2026-06-07",
+      "sheet": "יוני"
+    },
+    {
+      "source": "xlsx",
+      "reason": "schedule-uncertain-type",
+      "text": "יום שיא - גשרים",
+      "date": "2026-06-09",
+      "sheet": "יוני"
+    },
+    {
+      "source": "xlsx",
+      "reason": "schedule-uncertain-type",
+      "text": "חלוקת תעודות",
+      "date": "2026-06-18",
+      "sheet": "יוני"
+    }
+  ]
+}

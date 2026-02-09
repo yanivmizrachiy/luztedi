@@ -1,0 +1,163 @@
+{
+  "source": "word-docx",
+  "docx": "c:\\Users\\yaniv\\OneDrive\\Desktop\\לוז טדי.docx",
+  "today": "2026-02-09",
+  "added": {
+    "schedule": 0,
+    "exams": 0,
+    "holidays": 16
+  },
+  "merged": {
+    "schedule": 39,
+    "exams": 0,
+    "holidays": 3
+  },
+  "uncertainCount": 29,
+  "uncertain": [
+    {
+      "source": "docx",
+      "reason": "schedule-uncertain-type",
+      "text": "מקור: Word\nיום: ב'\nתאריך (מקורי): 16/2\nשעה (מקורי): לא צוין\nטקסט מקורי: הוקרה למחנכים"
+    },
+    {
+      "source": "docx",
+      "reason": "schedule-uncertain-type",
+      "text": "מקור: Word\nיום: ד'\nתאריך (מקורי): 25/2\nשעה (מקורי): לא צוין\nטקסט מקורי: מסיבת פורים מורים"
+    },
+    {
+      "source": "docx",
+      "reason": "schedule-uncertain-type",
+      "text": "מקור: Word\nיום: א'\nתאריך (מקורי): 1/3\nשעה (מקורי): בוקר\nטקסט מקורי: מסיבת פורים בביה\"ס\nאי-ודאות: שעה לא בפורמט HH:MM-HH:MM (נשמר ב-notes)"
+    },
+    {
+      "source": "docx",
+      "reason": "schedule-uncertain-type",
+      "text": "מקור: Word\nיום: א'\nתאריך (מקורי): 15/3\nשעה (מקורי): לא צוין\nטקסט מקורי: ישיבת חדר מורים"
+    },
+    {
+      "source": "docx",
+      "reason": "schedule-uncertain-type",
+      "text": "מקור: Word\nיום: ג'\nתאריך (מקורי): 17/3\nשעה (מקורי): לא צוין\nטקסט מקורי: התרמה לאלי\"ן"
+    },
+    {
+      "source": "docx",
+      "reason": "schedule-uncertain-type",
+      "text": "מקור: Word\nיום: ה'\nתאריך (מקורי): 9/4\nשעה (מקורי): לא צוין\nטקסט מקורי: חזרה לבית הספר"
+    },
+    {
+      "source": "docx",
+      "reason": "schedule-uncertain-type",
+      "text": "מקור: Word\nיום: ג'\nתאריך (מקורי): 14/4\nשעה (מקורי): לא צוין\nטקסט מקורי: יום השואה והגבורה"
+    },
+    {
+      "source": "docx",
+      "reason": "schedule-uncertain-type",
+      "text": "מקור: Word\nיום: א'\nתאריך (מקורי): 19/4\nשעה (מקורי): לא צוין\nטקסט מקורי: רבעון-יום הורים"
+    },
+    {
+      "source": "docx",
+      "reason": "schedule-uncertain-type",
+      "text": "מקור: Word\nיום: ד'\nתאריך (מקורי): 21/4\nשעה (מקורי): לא צוין\nטקסט מקורי: יום הזיכרון"
+    },
+    {
+      "source": "docx",
+      "reason": "schedule-uncertain-type",
+      "text": "מקור: Word\nיום: ה'\nתאריך (מקורי): 22/4\nשעה (מקורי): לא צוין\nטקסט מקורי: יום העצמאות"
+    },
+    {
+      "source": "docx",
+      "reason": "schedule-uncertain-type",
+      "text": "מקור: Word\nיום: א'\nתאריך (מקורי): 26/4\nשעה (מקורי): לא צוין\nטקסט מקורי: מפגש חדר מורים"
+    },
+    {
+      "source": "docx",
+      "reason": "schedule-uncertain-type",
+      "text": "מקור: Word\nיום: ד'-ה'\nתאריך (מקורי): 29-30/4\nשעה (מקורי): לא צוין\nטקסט מקורי: מסע תקומה-שכבת ט'"
+    },
+    {
+      "source": "docx",
+      "reason": "schedule-uncertain-type",
+      "text": "מקור: Word\nיום: ד'-ה'\nתאריך (מקורי): 29-30/4\nשעה (מקורי): לא צוין\nטקסט מקורי: מסע תקומה-שכבת ט'"
+    },
+    {
+      "source": "docx",
+      "reason": "schedule-uncertain-type",
+      "text": "מקור: Word\nיום: א'\nתאריך (מקורי): 3/5\nשעה (מקורי): לא צוין\nטקסט מקורי: מפגש חדר מורים"
+    },
+    {
+      "source": "docx",
+      "reason": "schedule-uncertain-type",
+      "text": "מקור: Word\nיום: ב'\nתאריך (מקורי): 4/5\nשעה (מקורי): לא צוין\nטקסט מקורי: סיום קורסי בחירה ח'"
+    },
+    {
+      "source": "docx",
+      "reason": "schedule-uncertain-type",
+      "text": "מקור: Word\nיום: א'\nתאריך (מקורי): 10/5\nשעה (מקורי): לא צוין\nטקסט מקורי: מפגש חדר מורים"
+    },
+    {
+      "source": "docx",
+      "reason": "schedule-uncertain-type",
+      "text": "מקור: Word\nיום: ד'\nתאריך (מקורי): 13/5\nשעה (מקורי): לא צוין\nטקסט מקורי: גיחה ט'"
+    },
+    {
+      "source": "docx",
+      "reason": "schedule-uncertain-type",
+      "text": "מקור: Word\nיום: ה'\nתאריך (מקורי): 14/5\nשעה (מקורי): לא צוין\nטקסט מקורי: יום ישראל"
+    },
+    {
+      "source": "docx",
+      "reason": "schedule-uncertain-type",
+      "text": "מקור: Word\nיום: א'\nתאריך (מקורי): 17/5\nשעה (מקורי): לא צוין\nטקסט מקורי: חדר מורים-גיוס כוחות"
+    },
+    {
+      "source": "docx",
+      "reason": "schedule-uncertain-type",
+      "text": "מקור: Word\nיום: ה'-ש\nתאריך (מקורי): 21-23/5\nשעה (מקורי): לא צוין\nטקסט מקורי: שבועות"
+    },
+    {
+      "source": "docx",
+      "reason": "schedule-uncertain-type",
+      "text": "מקור: Word\nיום: ה'-ש\nתאריך (מקורי): 21-23/5\nשעה (מקורי): לא צוין\nטקסט מקורי: שבועות"
+    },
+    {
+      "source": "docx",
+      "reason": "schedule-uncertain-type",
+      "text": "מקור: Word\nיום: ה'-ש\nתאריך (מקורי): 21-23/5\nשעה (מקורי): לא צוין\nטקסט מקורי: שבועות"
+    },
+    {
+      "source": "docx",
+      "reason": "schedule-uncertain-type",
+      "text": "מקור: Word\nיום: א'\nתאריך (מקורי): 24/5\nשעה (מקורי): לא צוין\nטקסט מקורי: מיפוי שכבתי ז'-ט'"
+    },
+    {
+      "source": "docx",
+      "reason": "schedule-uncertain-type",
+      "text": "מקור: Word\nיום: ד'\nתאריך (מקורי): 27/5\nשעה (מקורי): לא צוין\nטקסט מקורי: מסיבת סיום ט'"
+    },
+    {
+      "source": "docx",
+      "reason": "schedule-uncertain-type",
+      "text": "מקור: Word\nיום: א'\nתאריך (מקורי): 31/5\nשעה (מקורי): לא צוין\nטקסט מקורי: פנוי לתעודות/מסיבת סיום יב'"
+    },
+    {
+      "source": "docx",
+      "reason": "schedule-uncertain-type",
+      "text": "מקור: Word\nיום: א'\nתאריך (מקורי): 7/6\nשעה (מקורי): לא צוין\nטקסט מקורי: סיכום פדגוגי"
+    },
+    {
+      "source": "docx",
+      "reason": "schedule-uncertain-type",
+      "text": "מקור: Word\nיום: ג'\nתאריך (מקורי): 9/6\nשעה (מקורי): לא צוין\nטקסט מקורי: יום שיא גשרים"
+    },
+    {
+      "source": "docx",
+      "reason": "schedule-uncertain-type",
+      "text": "מקור: Word\nיום: א'\nתאריך (מקורי): 14/6\nשעה (מקורי): לא צוין\nטקסט מקורי: מפגש חדר מורים פרידה"
+    },
+    {
+      "source": "docx",
+      "reason": "schedule-uncertain-type",
+      "text": "מקור: Word\nיום: ה'\nתאריך (מקורי): 18/6\nשעה (מקורי): לא צוין\nטקסט מקורי: חלוקת תעודות"
+    }
+  ]
+}
