@@ -9,6 +9,10 @@ export default {
           600: '#2563eb',
           700: '#1d4ed8',
         },
+        training: {
+          50: '#fff1f2',
+          700: '#be185d',
+        },
         trip: {
           600: '#16a34a',
           700: '#15803d',
@@ -34,12 +38,12 @@ export default {
       },
       keyframes: {
         fadeSlideIn: {
-          '0%': { opacity: '0', transform: 'translateY(8px)' },
+          '0%': { opacity: '0', transform: 'translateY(10px) scale(0.99)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
       },
       animation: {
-        fadeSlideIn: 'fadeSlideIn 220ms ease-out',
+        fadeSlideIn: 'fadeSlideIn 260ms cubic-bezier(0.2, 0.8, 0.2, 1)',
       },
     },
   },

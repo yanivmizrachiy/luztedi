@@ -33,15 +33,15 @@ export function DigitalClock() {
     const hh = pad2(now.getHours())
     const mm = pad2(now.getMinutes())
     const ss = pad2(now.getSeconds())
-    return `${day} · ${d}.${m}.${y} · ${hh}:${mm}:${ss}`
+    return `היום ${day} · ${d}.${m}.${y} · ${hh}:${mm}:${ss}`
   }, [now])
 
   return (
     <div
-      className="w-full rounded-2xl bg-white shadow-soft px-4 py-3"
+      className="w-full rounded-2xl bg-white shadow-soft px-4 py-3 ring-1 ring-meeting-600/20"
       aria-label="שעון דיגיטלי"
     >
-      <div className="text-center font-extrabold text-meeting-700 tracking-wide">
+      <div className="text-center font-extrabold text-meeting-700 tracking-widest drop-shadow-sm">
         <span className="text-[16px] sm:text-[18px]">{text}</span>
       </div>
     </div>

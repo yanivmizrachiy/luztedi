@@ -1,8 +1,15 @@
-@config "../tailwind.config.ts";
 @import "tailwindcss";
 
 html {
   background: #ffffff;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 body {

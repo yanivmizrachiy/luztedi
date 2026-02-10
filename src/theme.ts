@@ -1,7 +1,7 @@
 import type { ScheduleEventType } from './types'
 
 export const SITE_TITLE =
-  'לוז מחצית שנייה תשע״ו — חטיבת הביניים ותיכון תדיקולק — תיכון על שם תדיקולק'
+  'תיכון פסגת זאב ע"ש טדי קולק'
 
 export function getEventLabel(type: ScheduleEventType): string {
   if (type === 'meeting') return 'ישיבה'
