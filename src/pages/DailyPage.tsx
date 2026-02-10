@@ -4,6 +4,13 @@ import { useMemo } from 'react'
 
 const HIDE_TIMES_FROM_ISO = '2026-03-15'
 
+const hebrewDateFormatter = new Intl.DateTimeFormat('he-u-ca-hebrew', {
+  day: 'numeric',
+  month: 'long',
+})
+
+const hebrewSmallCache = new Map<string, string>()
+
 function parseTimeToMinutes(time: string): number {
   const [hh, mm] = time.split(':').map((x) => Number(x))
   return hh * 60 + mm
@@ -14,7 +21,7 @@ function normalizeTitleForKey(title: string): string {
     .trim()
     .toLowerCase()
     .replace(/["'׳״]/g, '')
-    .replace(/[\-–—:.,!()?\[\]{}]/g, ' ')
+    .replace(/[–—:.,!()?[\]{}-]/g, ' ')
     .replace(/\s+/g, ' ')
 }
 
@@ -156,18 +163,25 @@ function formatDateTitle(isoDate: string): string {
 }
 
 function formatHebrewDateSmall(isoDate: string): string {
+  const cached = hebrewSmallCache.get(isoDate)
+  if (cached !== undefined) return cached
   try {
     const d = new Date(`${isoDate}T00:00:00`)
-    const fmt = new Intl.DateTimeFormat('he-u-ca-hebrew', { day: 'numeric', month: 'long' })
-    const parts = fmt.formatToParts(d)
+    const parts = hebrewDateFormatter.formatToParts(d)
     const dayRaw = parts.find((p) => p.type === 'day')?.value ?? ''
     const monthRaw = parts.find((p) => p.type === 'month')?.value ?? ''
     const dayNum = Number(dayRaw.replace(/[^0-9]/g, ''))
     const day = toHebrewNumeral(dayNum)
     const month = cleanHebrewMonth(monthRaw)
-    if (!day || !month) return ''
-    return `${day} ${month}`
+    if (!day || !month) {
+      hebrewSmallCache.set(isoDate, '')
+      return ''
+    }
+    const v = `${day} ${month}`
+    hebrewSmallCache.set(isoDate, v)
+    return v
   } catch {
+    hebrewSmallCache.set(isoDate, '')
     return ''
   }
 }
@@ -472,105 +486,106 @@ function sortTimeline(slots: TimelineSlot[]): TimelineSlot[] {
 export function DailyPage(props: { data: ScheduleData }) {
   const { data } = props
 
-  const byDate = new Map<
-    string,
-    { schedule: ScheduleItem[]; exams: ExamItem[]; holidays: HolidayItem[] }
-  >()
+  const timeline = useMemo(() => {
+    const byDate = new Map<
+      string,
+      { schedule: ScheduleItem[]; exams: ExamItem[]; holidays: HolidayItem[] }
+    >()
 
-  const ensure = (date: string) => {
-    const cur = byDate.get(date) ?? { schedule: [], exams: [], holidays: [] }
-    byDate.set(date, cur)
-    return cur
-  }
+    const ensure = (date: string) => {
+      const cur = byDate.get(date) ?? { schedule: [], exams: [], holidays: [] }
+      byDate.set(date, cur)
+      return cur
+    }
 
-  const pesach: HolidayItem[] = []
-  const purim: HolidayItem[] = []
-  const otherHolidays: HolidayItem[] = []
-  for (const s of data.schedule) ensure(s.date).schedule.push(s)
-  for (const e of data.exams) ensure(e.date).exams.push(e)
-  for (const h of data.holidays) {
-    if (isPesachHoliday(h)) pesach.push(h)
-    else if (isPurimHoliday(h)) purim.push(h)
-    else otherHolidays.push(h)
-  }
+    const pesach: HolidayItem[] = []
+    const purim: HolidayItem[] = []
+    const otherHolidays: HolidayItem[] = []
+    for (const s of data.schedule) ensure(s.date).schedule.push(s)
+    for (const e of data.exams) ensure(e.date).exams.push(e)
+    for (const h of data.holidays) {
+      if (isPesachHoliday(h)) pesach.push(h)
+      else if (isPurimHoliday(h)) purim.push(h)
+      else otherHolidays.push(h)
+    }
 
-  const consolidated = consolidateHolidayRanges(otherHolidays)
-  for (const h of consolidated.singles) ensure(h.date).holidays.push(h)
+    const consolidated = consolidateHolidayRanges(otherHolidays)
+    for (const h of consolidated.singles) ensure(h.date).holidays.push(h)
 
-  const dates = [...byDate.keys()].sort((a, b) => (a < b ? -1 : a > b ? 1 : 0))
+    const dates = [...byDate.keys()].sort((a, b) => (a < b ? -1 : a > b ? 1 : 0))
+    const allSlots: TimelineSlot[] = []
 
-  const allSlots: TimelineSlot[] = []
-
-  const pesachSummary = buildPesachSummary(pesach)
-  if (pesachSummary) {
-    allSlots.push({
-      kind: 'holiday',
-      id: `holiday-pesach-${pesachSummary.start}-${pesachSummary.end}`,
-      date: pesachSummary.start,
-      range: { start: pesachSummary.start, end: pesachSummary.end },
-      title: 'חופשת פסח',
-      subtitle: undefined,
-      badge: 'חופשה',
-      color: getEventColor('holiday'),
-      raw: {
+    const pesachSummary = buildPesachSummary(pesach)
+    if (pesachSummary) {
+      allSlots.push({
         kind: 'holiday',
         id: `holiday-pesach-${pesachSummary.start}-${pesachSummary.end}`,
         date: pesachSummary.start,
+        range: { start: pesachSummary.start, end: pesachSummary.end },
         title: 'חופשת פסח',
-        reason: 'פסח',
-      },
-    })
-  }
+        subtitle: undefined,
+        badge: 'חופשה',
+        color: getEventColor('holiday'),
+        raw: {
+          kind: 'holiday',
+          id: `holiday-pesach-${pesachSummary.start}-${pesachSummary.end}`,
+          date: pesachSummary.start,
+          title: 'חופשת פסח',
+          reason: 'פסח',
+        },
+      })
+    }
 
-  const purimSummary = buildPurimSummary(purim)
-  if (purimSummary) {
-    allSlots.push({
-      kind: 'holiday',
-      id: `holiday-purim-${purimSummary.start}-${purimSummary.end}`,
-      date: purimSummary.start,
-      range: { start: purimSummary.start, end: purimSummary.end },
-      title: 'חופשת פורים',
-      subtitle: undefined,
-      badge: 'חופשה',
-      color: getEventColor('holiday'),
-      raw: {
+    const purimSummary = buildPurimSummary(purim)
+    if (purimSummary) {
+      allSlots.push({
         kind: 'holiday',
         id: `holiday-purim-${purimSummary.start}-${purimSummary.end}`,
         date: purimSummary.start,
+        range: { start: purimSummary.start, end: purimSummary.end },
         title: 'חופשת פורים',
-        reason: 'פורים',
-      },
-    })
-  }
+        subtitle: undefined,
+        badge: 'חופשה',
+        color: getEventColor('holiday'),
+        raw: {
+          kind: 'holiday',
+          id: `holiday-purim-${purimSummary.start}-${purimSummary.end}`,
+          date: purimSummary.start,
+          title: 'חופשת פורים',
+          reason: 'פורים',
+        },
+      })
+    }
 
-  for (const r of consolidated.ranges) {
-    allSlots.push({
-      kind: 'holiday',
-      id: `holiday-range-${normalizeTitleForKey(r.title)}-${r.start}-${r.end}`,
-      date: r.start,
-      range: { start: r.start, end: r.end },
-      title: r.title,
-      subtitle: undefined,
-      badge: 'חופשה',
-      color: getEventColor('holiday'),
-      raw: {
+    for (const r of consolidated.ranges) {
+      allSlots.push({
         kind: 'holiday',
         id: `holiday-range-${normalizeTitleForKey(r.title)}-${r.start}-${r.end}`,
         date: r.start,
+        range: { start: r.start, end: r.end },
         title: r.title,
-        reason: 'חופשה',
-      },
-    })
-  }
+        subtitle: undefined,
+        badge: 'חופשה',
+        color: getEventColor('holiday'),
+        raw: {
+          kind: 'holiday',
+          id: `holiday-range-${normalizeTitleForKey(r.title)}-${r.start}-${r.end}`,
+          date: r.start,
+          title: r.title,
+          reason: 'חופשה',
+        },
+      })
+    }
 
-  for (const date of dates) {
-    const day = byDate.get(date)!
-    const schedule = sortDayItems(dedupeDayItems(day.schedule))
-    const slots = buildDaySlots({ date, schedule, exams: day.exams, holidays: day.holidays })
-    allSlots.push(...slots)
-  }
+    for (const date of dates) {
+      const day = byDate.get(date)!
+      const schedule = sortDayItems(dedupeDayItems(day.schedule))
+      const slots = buildDaySlots({ date, schedule, exams: day.exams, holidays: day.holidays })
+      allSlots.push(...slots)
+    }
 
-  const timeline = mergeTripRanges(sortTimeline(allSlots))
+    return mergeTripRanges(sortTimeline(allSlots))
+  }, [data])
 
   const monthOrder = useMemo(
     () => ['02', '03', '04', '05', '06'],
