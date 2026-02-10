@@ -3,12 +3,23 @@ import fs from 'node:fs'
 const DATA_PATH = 'data/schedule.json'
 
 function normalizeTitle(value) {
-  return String(value ?? '')
+  const base = String(value ?? '')
     .trim()
     .toLowerCase()
     .replace(/["'׳״]/g, '')
-    .replace(/[–—:.,!()?[\]{}-]/g, ' ')
+    .replace(/[–—:.,!()?\[\]{}-]/g, ' ')
     .replace(/\s+/g, ' ')
+
+  const words = base.split(' ').filter(Boolean)
+
+  for (let i = 0; i < words.length; i++) {
+    if (words[i] === 'אורינות') words[i] = 'אוריינות'
+  }
+
+  const isTraining = words.includes('השתלמות')
+  const cleanedWords = isTraining ? words.filter((w) => w !== 'סיום') : words
+
+  return cleanedWords.join(' ')
 }
 
 function mergeNotes(items) {
@@ -24,6 +35,7 @@ function mergeNotes(items) {
 
 function score(it) {
   let s = 0
+  if (it.type === 'trip') s += 3
   if (it.startTime) s += 10
   if (it.endTime) s += 5
   if (it.description) s += 2
@@ -83,7 +95,7 @@ const before = {
 }
 
 const scheduleRes = dedupeStable(data.schedule ?? [], (it) =>
-  ['schedule', it.date, it.type ?? '', normalizeTitle(it.title)].join('|'),
+  ['schedule', it.date, normalizeTitle(it.title)].join('|'),
 )
 
 const examsRes = dedupeStable(data.exams ?? [], (it) =>

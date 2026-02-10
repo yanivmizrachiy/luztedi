@@ -17,12 +17,23 @@ function parseTimeToMinutes(time: string): number {
 }
 
 function normalizeTitleForKey(title: string): string {
-  return title
+  const base = title
     .trim()
     .toLowerCase()
     .replace(/["'׳״]/g, '')
-    .replace(/[–—:.,!()?[\]{}-]/g, ' ')
+    .replace(/[[\]–—:.,!()?{}-]/g, ' ')
     .replace(/\s+/g, ' ')
+
+  const words = base.split(' ').filter(Boolean)
+
+  for (let i = 0; i < words.length; i++) {
+    if (words[i] === 'אורינות') words[i] = 'אוריינות'
+  }
+
+  const isTraining = words.includes('השתלמות')
+  const cleanedWords = isTraining ? words.filter((w) => w !== 'סיום') : words
+
+  return cleanedWords.join(' ')
 }
 
 function isIsoTime(value: string): boolean {
@@ -59,7 +70,7 @@ function deriveTimeFromNotes(notes?: string): { startTime?: string; endTime?: st
 function dedupeDayItems(items: ScheduleItem[]): ScheduleItem[] {
   const byKey = new Map<string, ScheduleItem[]>()
   for (const it of items) {
-    const key = `${it.date}|${it.type}|${normalizeTitleForKey(it.title)}`
+    const key = `${it.date}|${normalizeTitleForKey(it.title)}`
     const arr = byKey.get(key) ?? []
     arr.push(it)
     byKey.set(key, arr)
@@ -68,6 +79,7 @@ function dedupeDayItems(items: ScheduleItem[]): ScheduleItem[] {
   const bestOf = (group: ScheduleItem[]): ScheduleItem => {
     const score = (it: ScheduleItem) => {
       let s = 0
+      if (it.type === 'trip') s += 3
       if (it.startTime) s += 10
       if (it.endTime) s += 5
       if (it.description) s += 2
@@ -618,20 +630,33 @@ export function DailyPage(props: { data: ScheduleData }) {
         <div className="flex flex-row gap-2">
           {monthTargets.map((key) => {
             const exists = timeline.some((s) => monthKeyFromIsoDate(s.date) === key)
+            const monthNum = key.split('-')[1] ?? ''
+            const monthBg =
+              monthNum === '02'
+                ? 'bg-meeting-600'
+                : monthNum === '03'
+                  ? 'bg-training-700'
+                  : monthNum === '04'
+                    ? 'bg-trip-600'
+                    : monthNum === '05'
+                      ? 'bg-meeting-700'
+                      : 'bg-ink-950'
+            const label = monthLabelFromKey(key)
             return (
               <button
                 key={key}
                 type="button"
                 disabled={!exists}
                 onClick={() => scrollToMonth(key)}
-                className={`flex-1 rounded-2xl px-4 py-3 text-[14px] font-extrabold shadow-card ring-1 ring-black/5 transition-transform duration-200 ease-out active:scale-[0.98] focus-visible:outline-none ${
+                className={`flex-1 rounded-2xl px-4 py-3 text-[14px] font-extrabold shadow-card ring-1 transition-transform duration-200 ease-out active:scale-[0.98] focus-visible:outline-none ${
                   exists
-                    ? 'bg-ink-950 text-white'
-                    : 'bg-ink-950/60 text-white/35 shadow-none cursor-not-allowed ring-1 ring-white/10'
+                    ? `${monthBg} text-white ring-black/5`
+                    : `${monthBg}/60 text-white/35 shadow-none cursor-not-allowed ring-white/10`
                 }`}
-                aria-label={`חודש ${monthLabelFromKey(key)}`}
+                aria-label={`חודש ${label}`}
+                title={label}
               >
-                {monthLabelFromKey(key)}
+                <span className="block whitespace-nowrap overflow-hidden text-ellipsis">{label}</span>
               </button>
             )
           })}
@@ -671,13 +696,16 @@ export function DailyPage(props: { data: ScheduleData }) {
             const isTraining =
               slot.kind === 'schedule' && normalizeTitleForKey(slot.title).includes('השתלמות')
             const isIndependenceDay = normalizeTitleForKey(slot.title).includes('יום העצמאות')
-            const isDarkButton = slot.kind === 'holiday' || isIndependenceDay
+            const isReportCardsDay = normalizeTitleForKey(slot.title).includes('חלוקת תעודות')
+            const isDarkButton = slot.kind === 'holiday' || isIndependenceDay || isReportCardsDay
 
             const baseButton =
               slot.kind === 'holiday'
                 ? 'bg-green-900 text-white'
                 : isIndependenceDay
                   ? 'bg-meeting-700 text-white'
+                  : isReportCardsDay
+                    ? 'bg-holiday-900 text-white'
                   : 'bg-white text-ink-950'
 
             return (
@@ -696,12 +724,24 @@ export function DailyPage(props: { data: ScheduleData }) {
 
                 <button
                   type="button"
-                  className={`w-full rounded-2xl shadow-card p-4 motion-safe:animate-fadeSlideIn transition-transform duration-200 ease-out active:scale-[0.99] focus-visible:outline-none border-r-8 ${slot.color.border} ${baseButton}`}
+                  className={`relative w-full rounded-2xl shadow-card p-4 motion-safe:animate-fadeSlideIn transition-transform duration-200 ease-out active:scale-[0.99] focus-visible:outline-none border-r-8 ${slot.color.border} ${baseButton}`}
                   aria-label="אירוע"
                   dir="rtl"
                 >
+                  {isIndependenceDay ? (
+                    <div
+                      className="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl"
+                      aria-hidden="true"
+                    >
+                      <div className="absolute left-5 right-5 top-3 h-[3px] bg-white/25" />
+                      <div className="absolute left-5 right-5 top-6 h-[3px] bg-white/15" />
+                      <div className="absolute left-5 right-5 bottom-6 h-[3px] bg-white/15" />
+                      <div className="absolute left-5 right-5 bottom-3 h-[3px] bg-white/25" />
+                    </div>
+                  ) : null}
+
                   <div className="flex flex-col items-center text-center gap-2">
-                    {timeText ? (
+                    {timeText && !isTraining ? (
                       <div
                         className={`rounded-full px-3 py-1 text-[12px] font-extrabold ring-1 drop-shadow-sm ${
                           isDarkButton
@@ -746,6 +786,17 @@ export function DailyPage(props: { data: ScheduleData }) {
                           slot.title
                         )}
                       </div>
+
+                      {timeText && isTraining ? (
+                        <div
+                          className={`text-[13px] font-extrabold ${
+                            isDarkButton ? 'text-white/85' : 'text-black/60'
+                          }`}
+                          aria-label="זמן"
+                        >
+                          {timeText}
+                        </div>
+                      ) : null}
 
                       {slot.subtitle ? (
                         <div
